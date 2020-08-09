@@ -2,23 +2,21 @@
 
 module PagesHelper
   def group_ayah_by_lines(verses)
-
-=begin
-     This method words of each ayah by line number, and return words with following schema
-     {
-      page_number1: [
-       {verse_number: [words]}
-     ],
-
-     page_number2: [
-
-     ]
-     }
-=end
+    #      This method group words ayah by line number, and return words with following schema
+    #      {
+    #       page_number1: [
+    #        {verse_number: [words]}
+    #      ],
+    #
+    #      page_number2: [
+    #
+    #      ]
+    #      }
 
     lines = {}
 
-    verses.map(&:words).flatten.group_by(&:line_number)
+    # verses.map(&:words).flatten.group_by(&:line_number)
+
     verses.each do |verse|
       verse.words.each do |w|
         lines[w.line_number] ||= {}

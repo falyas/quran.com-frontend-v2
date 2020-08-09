@@ -1,19 +1,19 @@
 <% content_for :header do %>
   <div class="head-center">
-    <%= render 'shared/search_form' %>
+    <%= render 'shared/search_form', expanded: true %>
   </div>
 <% end %>
 
-<%= render "surah_actions" %>
+<%= render 'surah_actions' %>
 
-<div id="chapter-info"></div>
+<div id="chapter-info" class="mt-4"></div>
 
 <div class="container">
   <% if @presenter.show_bismillah? %>
-    <%= render "bismillah" %>
+    <%= render 'bismillah' %>
   <% end %>
-  <div id="verses" data-chapter-id="<%= @presenter.chapter.id %>" data-total-verses="<%= @presenter.chapter.verses_count %>">
-    <%= render "verses" %>
+  <div id="verses" data-chapter-id="<%= @presenter.chapter.id %>" data-total-verses="<%= @presenter.chapter.verses_count %>" data-controller="slim-scroller infinite-page chapter">
+    <%= render 'verses' %>
   </div>
 </div>
 

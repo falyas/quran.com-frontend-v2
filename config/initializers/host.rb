@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
-Rails.application.config.hosts += ["staging.quran.com",
-"qurancdn.com",
-                                   "beta.quran.com",
-                                   "www.qurancdn.com",
-                                   "localhost"
+Rails.application.config.hosts += [
+  '.quran.com',
+  '.qurancdn.com',
+  'localhost'
 ]
+
+if Rails.env.development?
+  Rails.application.config.hosts << '.ngrok.io'
+end

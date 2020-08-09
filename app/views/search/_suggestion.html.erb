@@ -1,0 +1,43 @@
+<li class="d-flex justify-content-between">
+  <% if item.is_a?(Verse) %>
+    <%
+      has_translation = @presenter.render_translations?(item)
+      verse_link = "/#{item.chapter_id}/#{item.verse_number}#{@presenter.params_for_verse_link(item)}"
+    %>
+
+    <div class="link">
+      <%= link_to item.verse_key,verse_link , class: 'ayah-badge', target: :blank %>
+    </div>
+
+    <div class="ayat">
+      <a href="<%= verse_link %>">
+        <b class="madani">
+          <%= item.highlighted_text.html_safe %>
+        </b>
+
+        <% if has_translation %>
+          <% translation = @presenter.load_translations(item)[0][:texts][0] %>
+         <br/>
+          <p class="fs-sm">
+            <%= translation[:text].to_s.html_safe %>
+          </p>
+        <% end %>
+      </a>
+    </div>
+  <% else %>
+    <div class="link">
+      <a href="<%= item[0] %>">
+        <%= item[0] %>
+      </a>
+    </div>
+
+    <div class="ayat">
+      <a href="<%= item[0] %>">
+        <b>
+          <%= item[1].html_safe %>
+        </b>
+      </a>
+    </div>
+  <% end %>
+</li>
+

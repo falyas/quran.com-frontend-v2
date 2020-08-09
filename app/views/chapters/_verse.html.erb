@@ -1,66 +1,57 @@
-<div class="verse" id="<%= verse.id %>" data-verse-number="<%= verse.verse_number %>">
+<div class="verse" id="<%= verse.id %>" data-verse-number="<%= verse.verse_number %>" data-controller="verse" data-key="<%= verse.verse_key %>" data-text="<%= verse.text_madani %>">
   <div class="row">
-    <div class="col-md-2 verse-actions">
+    <div class="col-md-1 verse-actions text-center <%= @presenter.render_translations? ? 'col-2' : 'no-transaltion col-12' %>">
       <div class="actions">
-        <a class="play play-verse">
-          <i class="fa fa-play"></i>
+        <a class="play play-verse d-flex align-items-center justify-content-center mx-auto">
+          <i class="fa fa-play-solid d-flex align-items-center"></i>
         </a>
 
         <span>
-          <%= link_to verse.verse_key, range_path(@presenter.chapter.id, verse.verse_number), target: :blank %>
+          <%= link_to verse.verse_key, "/#{verse.chapter_id}/#{verse.verse_number}#{@presenter.params_for_verse_link}", target: :blank %>
          </span>
       </div>
 
-      <% unless @presenter.render_translations? %>
-        <div class="verse-actions">
-          <a class="fa fa-docs copy" data-toggle="tooltip" data-placement="left" title="<%= t('action.copy.label') %>" done="<%= t('action.copy.done') %>"></a>
-          <a href="#" class="fa fa-share" data-toggle="tooltip" data-placement="left" title="<%= t('action.share') %>"></a>
-        </div>
+      <% if @presenter.show_verse_actions? %>
+        <% unless @presenter.render_translations? %>
+          <div class="verse-actions d-flex justify-content-between">
+            <a class="fa fa-copy copy" data-toggle="tooltip" data-placement="left" title="<%= t('action.copy.label') %>" done="<%= t('action.copy.done') %>" data-tack="ayah-action-copy"></a>
+            <a class="fa fa-archive fs-xl" data-toggle="tooltip" data-placement="left" title="<%= t('action.tafsir.label', default: 'Tafsir') %>" data-controller="ajax-modal" data-url="<%= verse_tafsirs_path(verse.id) %>" data-tack="ayah-action-tafsir"></a>
+            <a href="#" class="fa fa-share-alt" data-toggle="tooltip" data-placement="left" title="<%= t('action.share', default: 'Share ayah') %>" data-controller="ajax-modal" data-url="<%= share_verse_path(verse.id) %>" data-tack="ayah-action-share"></a>
+            <a class="reflection" data-toggle="tooltip" data-placement="left"  title="<%= t('action.quran_reflect', default: 'Read Reflections for this ayah on QuranReflect') %>" href="http://quranreflect.com/<%= "#{verse.chapter_id}" %>/<%= "#{verse.verse_number}"%>?feed=true" target="_blank" data-tack="ayah-action-quranreflect">
+              <%= lazy_image_tag 'media/images/QR-icon.png', height: '30px', alt: 'Quran.com mobile apps' %>
+            </a>
+          </div>
+        <% end %>
       <% end %>
     </div>
 
-    <div class="col-md-10">
-      <div class="arabic">
-        <% verse.words.each do |w| %>
-            <span class="<%= w.char_type_name %> w" id="w-<%= w.id %>" data-local='<%= w.word_translation&.language_name %>' data-id=<%= w.id %> data-audio="<%= w.audio_url %>" data-t="<%= w.word_translation&.text %>" data-tr="<%= w.transliteration&.text %>" data-position="<%= w.position %>">
-              <span class="glyph p<%= w.page_number %>-<%= @presenter.font %>"><%= w.send(@presenter.font_method).html_safe %></span>
-              <span class="text"><%= w.text_madani %> </span>
-            </span>
+    <div class="col-md-11 <%= @presenter.render_translations? ? 'col-10' : 'col-12' %>">
+      <div class="arabic <%= @presenter.font_method %>">
+        <% if @presenter.render_verse_words? %>
+          <%= render partial: 'chapters/word', collection: verse.words %>
+        <% else %>
+          <%= verse.send(@presenter.font_method).to_s.html_safe %>
         <% end %>
-
-        <!--<span class="ayah-number"><%#= verse.verse_number %></span>-->
       </div>
     </div>
   </div>
 
   <div class="row translations">
-    <div class="col-md-1">
-      <% if @presenter.render_translations? %>
+    <div class="col-md-1 col-2 text-center">
+      <% if @presenter.render_translations? && @presenter.show_verse_actions? %>
         <div class="verse-actions">
-          <a class="fa fa-docs copy" data-toggle="tooltip" data-placement="left" title="<%= t('action.copy.label') %>" done="<%= t('action.copy.done') %>"></a>
-          <a href="#" class="fa fa-share" data-toggle="tooltip" data-placement="left" title="<%= t('action.share') %>"></a>
-
-          <div class="hidden-md-up">
-            <a class="play play-verse">
-              <i class="fa fa-play"></i>
-            </a>
-
-            <span>
-             <%= link_to verse.verse_key, range_path(@presenter.chapter.id, verse.verse_number), target: :blank %>
-            </span>
-          </div>
+          <a class="fa fa-copy copy" data-toggle="tooltip" data-placement="left" title="<%= t('action.copy.label') %>" done="<%= t('action.copy.done') %>" data-tack="ayah-action-copy"></a>
+          <a class="fa fa-archive fs-xl" data-toggle="tooltip" data-placement="left" title="<%= t('action.tafsir.label', default: 'Tafsir') %>" data-controller="ajax-modal" data-url="<%= verse_tafsirs_path(verse.id) %>" data-tack="ayah-action-tafsir"></a>
+          <a href="#" class="fa fa-share-alt" data-toggle="tooltip" data-placement="left" title="<%= t('action.share', default: 'Share ayah') %>" data-controller="ajax-modal" data-url="<%= share_verse_path(verse.id) %>" data-tack="ayah-action-share"></a>
+          <a class="reflection" data-toggle="tooltip" data-placement="left"  title="<%= t('action.quran_reflect', default: 'Read Reflections for this ayah on QuranReflect') %>" href="http://quranreflect.com/<%= "#{verse.chapter_id}" %>/<%= "#{verse.verse_number}"%>?feed=true" target="_blank" data-tack="ayah-action-quranreflect">
+            <%= lazy_image_tag 'media/images/QR-icon.png', height: '30px', alt: 'Quran.com mobile apps' %>
+          </a>
         </div>
       <% end %>
     </div>
-    <div class="col-md-11">
-      <div class="translation">
-        <% if media = VerseMedia.get_media(verse.id) %>
-          <small>
-            <a class="media" data-media="<%= media %>"><i class="fa fa-play"></i> <%= _t('verses.media', from: 'Bayyinah') %>
-            </a>
-          </small>
-        <% end %>
 
+    <div class="col-md-11 col-10">
+      <div class="translation">
         <% if @presenter.render_translations? %>
           <%= render partial: 'translation', collection: @presenter.load_translations(verse), as: :translation %>
         <% end %>

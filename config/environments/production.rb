@@ -28,7 +28,7 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  #config.assets.compile = false
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   config.action_controller.asset_host = 'https://cdn.qurancdn.com'
@@ -57,12 +57,15 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
+  dalli_pool_size = ENV.fetch('‘RAILS_MAX_THREADS’'){5}
+  memcached_hosts = ENV.fetch('MEMCACHE_SERVERS'){ "memcached:11211" }
+  config.cache_store = :dalli_store, memcached_hosts, { namespace: 'quran', expires_in: 30.days, compress: true, pool_size: dalli_pool_size}
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "quran_production"
 
-  config.action_mailer.perform_caching = false
+  # config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

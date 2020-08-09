@@ -7,25 +7,25 @@
 default: &default
   adapter: postgresql
   timeout: 5000
-  host: localhost
   schema_search_path: quran,"$user",content,audio,i18n,public
 
 development:
   <<: *default
+  host: localhost
   database: quran_dev
-
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-test:
-  <<: *default
-  database: one_quran_test
 
 production:
   <<: *default
-  database: one_quran
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV['POSTGRES_PORT_5432_TCP_ADDR'] %>
+  port: <%= ENV['POSTGRES_PORT_5432_TCP_PORT'] %>
+  database: quran_dev
+  username: quran_dev
+  password: dev_quran
+  pool: <%= ENV.fetch('RAILS_MAX_THREADS'){5} %>
 
-quran_core:
+staging:
   <<: *default
   adapter: postgresql
   encoding: unicode
@@ -35,9 +35,26 @@ quran_core:
   username: quran_dev
   password: dev_quran
 
-quran_core_development:
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+test:
+  <<: *default
+  host: localhost
+  database: one_quran_test
+
+quran_core:
   <<: *default
   adapter: postgresql
+  encoding: unicode
+  host: <%= ENV['POSTGRES_PORT_5432_TCP_ADDR'] %>
+  port: <%= ENV['POSTGRES_PORT_5432_TCP_PORT'] %>
+  database: quran_dev
+  username: quran_dev
+
+quran_core_development:
+  <<: *default
   host: localhost
+  adapter: postgresql
   encoding: unicode
   database: quran_dev

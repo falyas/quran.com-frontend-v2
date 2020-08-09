@@ -3,7 +3,7 @@ en:
   local: english
   site_local: Site Language
   change_local: Choose the language you want the site to display in
-  local_native_name:  English
+  local_native_name: English
   language: Language
   page: Page
   settings:
@@ -39,29 +39,32 @@ en:
     verses: Verses
     pages: Pages
     revelation_place: Revelation Place
-    info: Chapter Info
+    info: Surah Info
     continue: Continue
     quick_links: Quick links
-    go_to_beginning: Beginning of chapter
-    read_full: Read full chapter
-    invalid: Invalid Surah
+    go_to_beginning: Beginning of Surah
+    read_full: Read full Surah
+    invalid: Surah not found during the search
   footnote: Footnote
   action:
     play: Play
     pause: Pause
-    tafsir: Tafsirs
     share: Share ayah
+    quran_reflect: Read Reflections for this ayah on QuranReflect
     addNote: Add Note
+    tafsir:
+      label: Tafsirs
+      select: Select Tafsir
     bookmark:
       label: Bookmark
-      done: Bookmarked
+      done: Bookmarked!
     copy:
       label: Copy
       done: Copied!
   search:
     label: Search
     placeholder: 'Search "Noah"'
-    result: "%{from}-%{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>"
+    result: "%{from}-%{to} OF <span> %{total} </span> SEARCH RESULTS FOR: <span class=text-success>%{query}</span>"
     error: Sorry, there was an error with your search.
     no_query: No search query.
     no_result: No results found.
@@ -70,7 +73,7 @@ en:
     yaseen: Surah Yaseen
     al_mulk: Surah Al Mulk
     ar_rahman: Surah Ar-Rahman
-    al_waqiah: Surah Al Waqiah
+    al_waqiah: Surah Al Waqi'ah
     al_kahf: Surah Al Kahf
     al_muzammil: Surah Al Muzzammil
   player:
@@ -81,7 +84,7 @@ en:
     repeat_single: Single
     repeat_range: Range
     repeat_from: From
-    repeat_to:  To
+    repeat_to: To
     repeat_times: Times
     repeat_loop: loop
     scroll: Automatically scrolls to the currently playing ayah
@@ -96,7 +99,7 @@ en:
     other_links: Other links
     contact_us: Contact us
     help: Help & feedback
-    about_project: Quran.com is a pro bono project for reading and studying the Quran (also known as The Noble Quran, Al Quran, Holy Quran, Koran).
+    about_project: Quran.com is a Sadaqah Jariyah. We hope to make it easy for everyone to read, study, and learn The Noble Quran. The Noble Quran has many names including Al-Quran Al-Kareem, Al-Ketab, Al-Furqan, Al-Maw'itha, Al-Thikr, and Al-Noor.
     rights: All Rights Reserved
     mobilea_apps: Mobile Apps
     navigate: Navigate
@@ -106,8 +109,8 @@ en:
   juz: Juz
   errors:
     not_found: Sorry, this page does not exist
-    invalid_verse: Verse is out of range. Please go to home page
-    invalid_chapter: Chapter is out of range. Please go to home page
+    invalid_verse: Check your Ayah selection. It's out of range.
+    invalid_chapter: Check your Surah selection. It's out of range.
     no_script: Looks like either your browser does not support Javascript or its disabled. Quran.com workes best with JavaScript enabled. For more instruction on how to enable javascript
   click_here: Click here
   tafsir_select: Select a tafsir
@@ -116,10 +119,10 @@ en:
   related_sites:
     label: Related Sites
     sunnah: Sunnah
-    sunnah_description: The Hadit of Prophet Muhammad(PBUH)
+    sunnah_description: The Hadith of Prophet Muhammad(PBUH)
     salah: Salah
     salah_description: Search prayer time for any location
-    audio: Nobel Quran in audio
+    audio: Noble Quran in audio
     audio_description: Learning & listening at the same time
   close: Close
   noble_quran: The Noble Quran

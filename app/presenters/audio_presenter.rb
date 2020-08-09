@@ -13,9 +13,9 @@ class AudioPresenter < BasePresenter
       audio = verse.audio
 
       json[verse.verse_number] = {
-          audio: audio.url,
-          segments: audio.segments,
-          duration: audio.duration
+        audio: audio.url,
+        segments: audio.segments,
+        duration: audio.duration
       }
     end
 
@@ -26,13 +26,13 @@ class AudioPresenter < BasePresenter
 
   def load_verses
     Verse
-        .eager_load(:audio)
-        .where(chapter_id: chapter_id, audio_files: {recitation_id: recitation_id})
-        .where("verse_number >= ? AND verse_number <= ?", verse_start.to_i, verse_end.to_i)
+      .eager_load(:audio)
+      .where(chapter_id: chapter_id, audio_files: { recitation_id: recitation_id })
+      .where('verse_number >= ? AND verse_number <= ?', verse_start.to_i, verse_end.to_i)
   end
 
   def verse_start
-    (current_page*per_page) + 1
+    (current_page * per_page) + 1
   end
 
   def verse_end
@@ -51,13 +51,10 @@ class AudioPresenter < BasePresenter
     # 7 is default recitation
 
     recitation = (
-    params[:recitation].presence ||
-        session[:recitation] || "7"
-    )
+    params[:recitation].presence || DEFAULT_RECITATION
+  ).to_i
 
-    session[:recitation] = recitation
-
-    recitation.to_i
+    recitation
   end
 
   def chapter_id
